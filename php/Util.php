@@ -119,6 +119,35 @@
 	        return $response;
 	    }
 
+    	//curl using GET
+		public static function sendUrlGet($url, $timeoutMs = 10000) {
+	        $time_start = microtime(true);
+	        Yii::log("CURL url= : $url", CLogger::LEVEL_INFO);
+	        
+	        $ch = curl_init($url);
+	        curl_setopt($ch, CURLOPT_TIMEOUT_MS, $timeoutMs);
+	        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	        $result = curl_exec($ch);
+	        curl_close($ch);
+	        
+	        $time_end = microtime(true);
+	        $time_cost = $time_end - $time_start;
+	        Yii::log("CURL END , cost time: $time_cost", CLogger::LEVEL_INFO);
+	        return $result;
+    	}
 
+
+    	//create URL with http or https depending on the requirement. $path can be relative path, $param array to be passed by GET
+		public static function createUrl($path, $params=array()){
+	        if(is_array($path) && sizeof($path)>0){
+	            $path = $path[0];
+	        }
+	        if(isset($GLOBALS['MOD']) && $GLOBALS['MOD']!='prd'){
+	            return Yii::app()->createUrl($path, $params);
+	        }else{
+	            return Yii::app()->createAbsoluteUrl($path, $params, "https");
+	        }
+	    }
 
 ?> 
