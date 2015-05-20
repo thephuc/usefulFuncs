@@ -1,0 +1,23 @@
+1. use jquery’s toggle() to toggle hiding/showing div/buttons
+for e.g: toggle displaying “edit” and “save” buttons (when one is shown the other isn’t)
+
+this method can be used for “cancel” button also. For e.g, clicking “cancel” toggle to hide “save” button and show “edit” button instead. 
+
+2. mark updated fields using addClass(‘updated’). When submitting data to update db, only submit those with ‘updated’ fields:
+
+var fieldsToBeUpdated = $(‘#updateData input.updated’);
+var updatedFields = {};
+$(fieldsToBeUpdated).each(function(){
+	var key = $(this).attr(‘placeholder’).replace(‘ ‘,’’).toLowerCase();
+	var value = $(this).val();
+	updatedFields[key]=value;
+})
+
+*** clicking “Cancel” should remove all the existing “updated” classes else the old unwanted editing would be updated in the db as well.
+ 
+
+3. when designing <a> buttons, remember to to event.preventDefault() if need be to prevent changing the window address
+
+4. add attribute
+$(‘#divToaddIn’).attr(‘rel’, valueToAdd);
+
